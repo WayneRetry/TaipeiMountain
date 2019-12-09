@@ -1,16 +1,23 @@
 PODS:
+  - SVProgressHUD (2.2.5)
   - TaipeiMountain (0.1.0)
 
 DEPENDENCIES:
+  - SVProgressHUD
   - TaipeiMountain (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - SVProgressHUD
 
 EXTERNAL SOURCES:
   TaipeiMountain:
     :path: "../"
 
 SPEC CHECKSUMS:
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TaipeiMountain: b6a7d9b08054deff692bc162bdc86cc252e6b4cc
 
-PODFILE CHECKSUM: e12a5e6f2143a31455e2aa2d802bf87e9dbe6d3a
+PODFILE CHECKSUM: 124bfbdc0a96129f728466f9cbc167f733bf5b9a
 
 COCOAPODS: 1.8.4

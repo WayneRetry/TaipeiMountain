@@ -1,7 +1,9 @@
 use_frameworks!
 
 target 'TaipeiMountain_Example' do
+  
   pod 'TaipeiMountain', :path => '../'
+  pod 'SVProgressHUD'
 
   target 'TaipeiMountain_Tests' do
     inherit! :search_paths

@@ -70,7 +70,7 @@ public class TMCameraHelper {
         }
     }
     
-    public class func saveImageToPhotoLibrary(info: [UIImagePickerController.InfoKey : Any], completed: @escaping (_ asset: PHAsset?) -> Void) {
+    public class func saveImageToPhotoLibrary(info: [UIImagePickerController.InfoKey : Any], completed: @escaping (_ image: UIImage, _ asset: PHAsset?) -> Void) {
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
@@ -84,7 +84,7 @@ public class TMCameraHelper {
                 identifier = request.placeholderForCreatedAsset?.localIdentifier ?? ""
             }, completionHandler: { (_, _) in
                 let assets = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: options)
-                completed(assets.firstObject)
+                completed(image, assets.firstObject)
             })
         }
     }

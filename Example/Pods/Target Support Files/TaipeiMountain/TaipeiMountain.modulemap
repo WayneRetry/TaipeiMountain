@@ -1,6 +1,0 @@
-framework module TaipeiMountain {
-  umbrella header "TaipeiMountain-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -38,6 +38,18 @@ public class TMPhotoViewController: UIViewController {
         loadAlbum()
     }
     
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateCachedAssets()
+    }
+    
+    public func preSelectImage(assets: [PHAsset]) {
+        for asset in assets {
+            let image = Image(asset: asset)
+            payloadData.add(image)
+        }
+    }
+    
     private func setLayout() {
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -161,11 +173,11 @@ public class TMPhotoViewController: UIViewController {
                     tempData.sort(by: {$0.index < $1.index})
                     let images = tempData.compactMap{ return (image: $0.image, asset: $0.asset) }
                     self?.delegate?.photoPickerViewController(picker: self, images: images)
+                    self?.dismiss(animated: true, completion: nil)
                 }
-                
             })
         }
-        dismiss(animated: true, completion: nil)
+        
     }
     
     @objc private func closePress() {
@@ -239,13 +251,13 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCell.self), for: indexPath) as! ImageCell
-        cell.imageView.layoutIfNeeded()
-        let options = PHImageRequestOptions()
-        options.isNetworkAccessAllowed = true
         let size = CGSize(width: cellSize * UIScreen.main.scale, height: cellSize * UIScreen.main.scale)
         if let item = currentAlbum?.items[indexPath.item] {
-            imageManager.requestImage(for: item.asset, targetSize: size, contentMode: .aspectFill, options: options) { (image, _) in
-                cell.imageView.image = image
+            cell.representedAssetIdentifier = item.asset.localIdentifier
+            imageManager.requestImage(for: item.asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+                if cell.representedAssetIdentifier == item.asset.localIdentifier {
+                    cell.imageView.image = image
+                }
             }
         }
         reloadSelectCell(cell, indexPath: indexPath)
@@ -268,6 +280,10 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         reloadSelectCell()
         changeRightItem(isDone: payloadData.images.isEmpty == false)
+    }
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateCachedAssets()
     }
     
     fileprivate func updateCachedAssets() {
@@ -293,10 +309,8 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         // Update the assets the PHCachingImageManager is caching.
         let thumbnailSize = CGSize(width: cellSize * UIScreen.main.scale, height: cellSize * UIScreen.main.scale)
-        imageManager.startCachingImages(for: addedAssets,
-                                        targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
-        imageManager.stopCachingImages(for: removedAssets,
-                                       targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
+        imageManager.startCachingImages(for: addedAssets, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
+        imageManager.stopCachingImages(for: removedAssets, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
         
         // Store the preheat rect to compare against in the future.
         previousPreheatRect = preheatRect

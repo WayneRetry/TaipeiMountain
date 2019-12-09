@@ -20,81 +20,76 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-vv-dPk">
-                                <rect key="frame" x="165.5" y="318.5" width="44" height="30"/>
+                                <rect key="frame" x="16" y="50" width="44" height="30"/>
                                 <state key="normal" title="Album"/>
                                 <connections>
-                                    <action selector="press" destination="vXZ-lx-hvc" eventType="touchUpInside" id="hgg-hm-Cl3"/>
+                                    <action selector="albumPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mLp-rc-f1a"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="09h-e6-cVg">
-                                <rect key="frame" x="160.5" y="363.5" width="54" height="30"/>
+                                <rect key="frame" x="76" y="50" width="54" height="30"/>
                                 <state key="normal" title="Camera"/>
                                 <connections>
-                                    <action selector="camre" destination="vXZ-lx-hvc" eventType="touchUpInside" id="jdA-5u-94i"/>
+                                    <action selector="cameraPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="IFV-LH-dwW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t1D-Z5-ZNp">
-                                <rect key="frame" x="164.5" y="273.5" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CNv-X6-lR2">
+                                <rect key="frame" x="16" y="96" width="343" height="571"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageTableViewCell" rowHeight="150" id="11u-87-z32" customClass="ImageTableViewCell" customModule="TaipeiMountain_Example" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="150"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="11u-87-z32" id="ypa-bp-Q0e">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yoy-uM-E0o">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="150"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Yoy-uM-E0o" firstAttribute="leading" secondItem="ypa-bp-Q0e" secondAttribute="leading" id="6Gq-2H-Yum"/>
+                                                <constraint firstAttribute="bottom" secondItem="Yoy-uM-E0o" secondAttribute="bottom" id="BQE-ZC-hlQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="Yoy-uM-E0o" secondAttribute="trailing" id="Fl7-UC-eNb"/>
+                                                <constraint firstItem="Yoy-uM-E0o" firstAttribute="top" secondItem="ypa-bp-Q0e" secondAttribute="top" id="NuI-wG-0uj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="fullImageView" destination="Yoy-uM-E0o" id="0WH-cw-vQX"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXa-fi-seK">
+                                <rect key="frame" x="323" y="50" width="36" height="30"/>
+                                <state key="normal" title="Clear"/>
                                 <connections>
-                                    <segue destination="SAm-Z3-tcb" kind="presentation" id="DFE-T5-XHK"/>
+                                    <action selector="clearPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="q1G-50-IuF"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="09h-e6-cVg" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="IqD-ml-OM8"/>
-                            <constraint firstItem="09h-e6-cVg" firstAttribute="top" secondItem="5fS-vv-dPk" secondAttribute="bottom" constant="15" id="KYQ-Fl-O1A"/>
-                            <constraint firstItem="5fS-vv-dPk" firstAttribute="top" secondItem="t1D-Z5-ZNp" secondAttribute="bottom" constant="15" id="Wcv-Qo-vUJ"/>
-                            <constraint firstItem="t1D-Z5-ZNp" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="ZlH-Jz-B0l"/>
-                            <constraint firstItem="5fS-vv-dPk" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="t6S-W7-iQq"/>
-                            <constraint firstItem="5fS-vv-dPk" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="vqq-8Z-2v7"/>
+                            <constraint firstItem="YXa-fi-seK" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="5vN-es-nf2"/>
+                            <constraint firstItem="5fS-vv-dPk" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="C4K-CU-hzS"/>
+                            <constraint firstItem="CNv-X6-lR2" firstAttribute="top" secondItem="5fS-vv-dPk" secondAttribute="bottom" constant="16" id="Hrg-h3-Nu1"/>
+                            <constraint firstItem="5fS-vv-dPk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="ITT-vU-KLe"/>
+                            <constraint firstItem="09h-e6-cVg" firstAttribute="leading" secondItem="5fS-vv-dPk" secondAttribute="trailing" constant="16" id="Ukb-pr-6Ey"/>
+                            <constraint firstItem="YXa-fi-seK" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="WEW-hk-TEh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CNv-X6-lR2" secondAttribute="trailing" id="Z5O-Yb-F5v"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="CNv-X6-lR2" secondAttribute="bottom" id="dJ0-kh-QuL"/>
+                            <constraint firstItem="09h-e6-cVg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="kOk-gP-LNp"/>
+                            <constraint firstItem="CNv-X6-lR2" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="zt2-WL-lAk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="CNv-X6-lR2" id="6RD-xU-IoO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-254" y="-1"/>
-        </scene>
-        <!--View Controller2-->
-        <scene sceneID="6F2-f6-YtH">
-            <objects>
-                <viewController id="SAm-Z3-tcb" customClass="ViewController2" customModule="TaipeiMountain_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="d7G-K5-hkU"/>
-                        <viewControllerLayoutGuide type="bottom" id="vG4-Wi-QH8"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="GCs-u6-rj1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGD-Xp-C0g">
-                                <rect key="frame" x="66" y="308.5" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="press" destination="SAm-Z3-tcb" eventType="touchUpInside" id="ye1-n4-U8H"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNW-s3-0up">
-                                <rect key="frame" x="263" y="308.5" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="camre" destination="SAm-Z3-tcb" eventType="touchUpInside" id="XT6-rD-0K4"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="OGD-Xp-C0g" firstAttribute="leading" secondItem="GCs-u6-rj1" secondAttribute="leadingMargin" constant="50" id="5rz-7z-pks"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="UNW-s3-0up" secondAttribute="trailing" constant="50" id="J4w-o3-gJg"/>
-                            <constraint firstItem="UNW-s3-0up" firstAttribute="centerY" secondItem="GCs-u6-rj1" secondAttribute="centerY" id="UYx-8E-yd6"/>
-                            <constraint firstItem="OGD-Xp-C0g" firstAttribute="centerY" secondItem="GCs-u6-rj1" secondAttribute="centerY" id="l4R-w0-27q"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0ri-XZ-Ayk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="543" y="-1"/>
+            <point key="canvasLocation" x="-255.19999999999999" y="-1.3493253373313345"/>
         </scene>
     </scenes>
 </document>

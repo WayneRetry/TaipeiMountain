@@ -67,6 +67,7 @@ class ImageSelectedView: UIView {
 
 class ImageCell: UICollectionViewCell {
     
+    var representedAssetIdentifier: String = ""
     lazy var imageView: UIImageView = createImageView()
     lazy var highlightOverlay: UIView = createHighlightOverlay()
     lazy var selectedView: ImageSelectedView = createSelectedView()
@@ -92,8 +93,9 @@ class ImageCell: UICollectionViewCell {
         }
     }
     
-    func configure(image: Image) {
-        imageView.tm_loadImage(image.asset)
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
     }
     
     private func setLayout() {
