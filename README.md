@@ -22,7 +22,7 @@ pod 'TaipeiMountain'
 
 ## Author
 
-wayne, wayne_lin@gamer.com.tw
+Wayne, waynelin1215@gmail.com
 
 ## License
 
