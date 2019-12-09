@@ -1,0 +1,6 @@
+framework module Pods_TaipeiMountain_Tests {
+  umbrella header "Pods-TaipeiMountain_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="TaipeiMountain_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-vv-dPk">
+                                <rect key="frame" x="165.5" y="318.5" width="44" height="30"/>
+                                <state key="normal" title="Album"/>
+                                <connections>
+                                    <action selector="press" destination="vXZ-lx-hvc" eventType="touchUpInside" id="hgg-hm-Cl3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="09h-e6-cVg">
+                                <rect key="frame" x="160.5" y="363.5" width="54" height="30"/>
+                                <state key="normal" title="Camera"/>
+                                <connections>
+                                    <action selector="camre" destination="vXZ-lx-hvc" eventType="touchUpInside" id="jdA-5u-94i"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t1D-Z5-ZNp">
+                                <rect key="frame" x="164.5" y="273.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="SAm-Z3-tcb" kind="presentation" id="DFE-T5-XHK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="09h-e6-cVg" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="IqD-ml-OM8"/>
+                            <constraint firstItem="09h-e6-cVg" firstAttribute="top" secondItem="5fS-vv-dPk" secondAttribute="bottom" constant="15" id="KYQ-Fl-O1A"/>
+                            <constraint firstItem="5fS-vv-dPk" firstAttribute="top" secondItem="t1D-Z5-ZNp" secondAttribute="bottom" constant="15" id="Wcv-Qo-vUJ"/>
+                            <constraint firstItem="t1D-Z5-ZNp" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="ZlH-Jz-B0l"/>
+                            <constraint firstItem="5fS-vv-dPk" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="t6S-W7-iQq"/>
+                            <constraint firstItem="5fS-vv-dPk" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="vqq-8Z-2v7"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-254" y="-1"/>
+        </scene>
+        <!--View Controller2-->
+        <scene sceneID="6F2-f6-YtH">
+            <objects>
+                <viewController id="SAm-Z3-tcb" customClass="ViewController2" customModule="TaipeiMountain_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d7G-K5-hkU"/>
+                        <viewControllerLayoutGuide type="bottom" id="vG4-Wi-QH8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GCs-u6-rj1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGD-Xp-C0g">
+                                <rect key="frame" x="66" y="308.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="press" destination="SAm-Z3-tcb" eventType="touchUpInside" id="ye1-n4-U8H"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNW-s3-0up">
+                                <rect key="frame" x="263" y="308.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="camre" destination="SAm-Z3-tcb" eventType="touchUpInside" id="XT6-rD-0K4"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="OGD-Xp-C0g" firstAttribute="leading" secondItem="GCs-u6-rj1" secondAttribute="leadingMargin" constant="50" id="5rz-7z-pks"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UNW-s3-0up" secondAttribute="trailing" constant="50" id="J4w-o3-gJg"/>
+                            <constraint firstItem="UNW-s3-0up" firstAttribute="centerY" secondItem="GCs-u6-rj1" secondAttribute="centerY" id="UYx-8E-yd6"/>
+                            <constraint firstItem="OGD-Xp-C0g" firstAttribute="centerY" secondItem="GCs-u6-rj1" secondAttribute="centerY" id="l4R-w0-27q"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0ri-XZ-Ayk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="543" y="-1"/>
+        </scene>
+    </scenes>
+</document>
