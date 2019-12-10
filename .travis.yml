@@ -1,4 +1,5 @@
 language: swift
+osx_image: xcode10.3
 before_script:
   - chmod +x build.sh
 script: ./build.sh
