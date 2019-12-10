@@ -1,6 +1,6 @@
 # TaipeiMountain
 
-[![CI Status](https://img.shields.io/travis/wayne/TaipeiMountain.svg?style=flat)](https://travis-ci.org/WayneLin1215/TaipeiMountain.svg?branch=master)
+[![CI Status](https://img.shields.io/travis/WayneLin1215/TaipeiMountain.svg?style=flat)](https://travis-ci.org/WayneLin1215/TaipeiMountain)
 [![Version](https://img.shields.io/cocoapods/v/TaipeiMountain.svg?style=flat)](https://cocoapods.org/pods/TaipeiMountain)
 [![License](https://img.shields.io/cocoapods/l/TaipeiMountain.svg?style=flat)](https://cocoapods.org/pods/TaipeiMountain)
 [![Platform](https://img.shields.io/cocoapods/p/TaipeiMountain.svg?style=flat)](https://cocoapods.org/pods/TaipeiMountain)
