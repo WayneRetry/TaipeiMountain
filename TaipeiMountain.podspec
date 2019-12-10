@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TaipeiMountain'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of TaipeiMountain.'
+  s.version          = '1.0.0'
+  s.summary          = 'TaipeiMountain is album photo picker written in Swift.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,15 +18,15 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+TaipeiMountain is album photo picker written in Swift.
                        DESC
 
-  s.homepage         = 'https://github.com/wayne/TaipeiMountain'
+  s.homepage         = 'https://github.com/WayneLin1215/TaipeiMountain'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'wayne' => 'wayne_lin@gamer.com.tw' }
-  s.source           = { :git => 'https://github.com/wayne/TaipeiMountain.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { 'Wayne' => 'waynelin1215@gmail.com' }
+  s.source           = { :git => 'https://github.com/WayneLin1215/TaipeiMountain.git', :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/antiso_help'
 
   s.ios.deployment_target = '10.0'
 
