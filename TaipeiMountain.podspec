@@ -29,7 +29,7 @@ TaipeiMountain is album photo picker written in Swift.
   s.social_media_url = 'https://twitter.com/antiso_help'
 
   s.ios.deployment_target = '10.0'
-
+  s.swift_version = '4.2'
   s.source_files = 'TaipeiMountain/Classes/**/*'
   
   # s.resource_bundles = {
