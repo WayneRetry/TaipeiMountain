@@ -1,6 +1,6 @@
 PODS:
   - SVProgressHUD (2.2.5)
-  - TaipeiMountain (0.1.0)
+  - TaipeiMountain (1.0.0)
 
 DEPENDENCIES:
   - SVProgressHUD
@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  TaipeiMountain: b6a7d9b08054deff692bc162bdc86cc252e6b4cc
+  TaipeiMountain: 76928cb4be05222ed1765d944de0ec99fe79352c
 
 PODFILE CHECKSUM: 124bfbdc0a96129f728466f9cbc167f733bf5b9a
 
