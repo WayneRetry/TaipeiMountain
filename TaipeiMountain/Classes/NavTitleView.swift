@@ -9,8 +9,10 @@ class NavTitleView: UIView {
     lazy private var titleLabel: UILabel = createTitleLabel()
     lazy private var subtitleLabel: UILabel = createSubtitleLabel()
     lazy private var touchButton: UIButton = createButton()
+    private let config: TMConfig
     
-    init() {
+    init(config: TMConfig) {
+        self.config = config
         super.init(frame: .zero)
         addSubview(titleLabel)
         addSubview(subtitleLabel)
@@ -48,7 +50,7 @@ class NavTitleView: UIView {
     private func createTitleLabel() -> UILabel {
         let label = UILabel(frame: CGRect(x:0, y:-2, width:0, height:0))
         label.backgroundColor = UIColor.clear
-        label.textColor = UIColor.black
+        label.textColor = config.getNavigationTitleColor()
         label.lineBreakMode = .byTruncatingMiddle
         label.font = UIFont.systemFont(ofSize: 17)
         return label
@@ -57,7 +59,7 @@ class NavTitleView: UIView {
     private func createSubtitleLabel() -> UILabel {
         let label = UILabel(frame: CGRect(x:0, y:20, width:0, height:0))
         label.backgroundColor = UIColor.clear
-        label.textColor = UIColor.black
+        label.textColor = config.getNavigationSubTitleColor()
         label.font = UIFont.systemFont(ofSize: 10)
         label.text = "點按這邊以變更"
         return label
@@ -85,11 +87,11 @@ class NavTitleView: UIView {
     @objc func buttonPressUpInside() {
         UIView.transition(with: titleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
             [weak self] in
-            self?.titleLabel.textColor = UIColor.black
+            self?.titleLabel.textColor = self?.config.getNavigationTitleColor()
         }, completion: nil)
         UIView.transition(with: subtitleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
             [weak self] in
-            self?.subtitleLabel.textColor = UIColor.black
+            self?.subtitleLabel.textColor = self?.config.getNavigationSubTitleColor()
         }, completion: nil)
         delegate?.navigationTitlePress()
     }
@@ -97,11 +99,11 @@ class NavTitleView: UIView {
     @objc func buttonPressUpOutside() {
         UIView.transition(with: titleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
             [weak self] in
-            self?.titleLabel.textColor = UIColor.black
+            self?.titleLabel.textColor = self?.config.getNavigationTitleColor()
         }, completion: nil)
         UIView.transition(with: subtitleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
             [weak self] in
-            self?.subtitleLabel.textColor = UIColor.black
+            self?.subtitleLabel.textColor = self?.config.getNavigationSubTitleColor()
         }, completion: nil)
     }
 }

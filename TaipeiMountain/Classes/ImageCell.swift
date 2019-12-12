@@ -5,6 +5,11 @@ class ImageSelectedView: UIView {
     
     lazy var labelView: UIView = createLabelView()
     lazy var countLabel: UILabel = createCountLabel()
+    var config: TMConfig? {
+        didSet {
+            updateColor()
+        }
+    }
     
     init() {
         super.init(frame: .zero)
@@ -17,8 +22,8 @@ class ImageSelectedView: UIView {
     
     func setSelect(_ index: Int) {
         countLabel.text = "\(index + 1)"
-        layer.borderColor = Config.Style.ImageCell.selectedColor.cgColor
-        labelView.backgroundColor = Config.Style.ImageCell.selectedColor
+        layer.borderColor = config?.getImageCellSelectColor().cgColor
+        labelView.backgroundColor = config?.getImageCellSelectColor()
         labelView.layer.borderColor = UIColor.clear.cgColor
     }
     
@@ -26,7 +31,7 @@ class ImageSelectedView: UIView {
         countLabel.text = ""
         layer.borderColor = UIColor.clear.cgColor
         labelView.backgroundColor = UIColor.clear
-        labelView.layer.borderColor = Config.Style.ImageCell.defaultBorderColor.cgColor
+        labelView.layer.borderColor = config?.getImageCellBorderColor().cgColor
     }
     
     private func setLayout() {
@@ -47,11 +52,15 @@ class ImageSelectedView: UIView {
         ])
     }
     
+    private func updateColor() {
+        labelView.layer.borderColor = config?.getImageCellBorderColor().cgColor
+        countLabel.textColor = config?.getImageCellCountColor()
+    }
+    
     private func createLabelView() -> UIView {
         let view = UIView()
         view.layer.cornerRadius = 12
         view.layer.borderWidth = 2
-        view.layer.borderColor = Config.Style.ImageCell.defaultBorderColor.cgColor
         return view
     }
     
@@ -59,7 +68,6 @@ class ImageSelectedView: UIView {
         let label = UILabel()
         label.text = ""
         label.textAlignment = .center
-        label.textColor = Config.Style.ImageCell.countColor
         label.font = UIFont.systemFont(ofSize: 11, weight: .bold)
         return label
     }
@@ -68,6 +76,11 @@ class ImageSelectedView: UIView {
 class ImageCell: UICollectionViewCell {
     
     var representedAssetIdentifier: String = ""
+    var config: TMConfig? {
+        didSet {
+            updateColor()
+        }
+    }
     lazy var imageView: UIImageView = createImageView()
     lazy var highlightOverlay: UIView = createHighlightOverlay()
     lazy var selectedView: ImageSelectedView = createSelectedView()
@@ -121,6 +134,10 @@ class ImageCell: UICollectionViewCell {
             trailingAnchor.constraint(equalTo: selectedView.trailingAnchor, constant: 0),
             bottomAnchor.constraint(equalTo: selectedView.bottomAnchor, constant: 0),
         ])
+    }
+    
+    private func updateColor() {
+        selectedView.config = config
     }
     
     private func createImageView() -> UIImageView {

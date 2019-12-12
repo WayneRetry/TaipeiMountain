@@ -33,7 +33,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func albumPress() {
-        let vc = TMPhotoViewController(delegate: self)
+        let config = TMConfig()
+        config.mainColor = .red
+        let vc = TMPhotoViewController(delegate: self, config: config)
         vc.preSelectImage(assets: imageData.compactMap{$0.asset})
         let nv = UINavigationController(rootViewController: vc)
         nv.modalPresentationStyle = .fullScreen
@@ -62,7 +64,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController: TMPhotoPickerDelegate {
 
     func didReceiveAccessDenied() {
-        SVProgressHUD.showError(withStatus: "AccessDenied!")
+        print("AccessDenied!")
     }
     
     func photoPickerViewController(picker: TMPhotoViewController?, images: [(image: UIImage, asset: PHAsset)]) {

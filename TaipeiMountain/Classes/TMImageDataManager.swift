@@ -1,18 +1,13 @@
-//
-//  TMImageDataManager.swift
-//  Pods-TaipeiMountain_Example
-//
-//  Created by Wayne Lin on 2019/11/28.
-//
-
 import Photos
 public class TMImageDataManager: NSObject, PHPhotoLibraryChangeObserver {
+    
+    var changeInstance: ((PHChange) -> Void)?
     
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
-    public func fetch(_ complete: @escaping (Album) -> Void) {
+    public func fetch(_ complete: @escaping (Album) -> Void, changeInstance: @escaping (PHChange) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let `self` = self else { return }
             let subtypes: [PHAssetCollectionSubtype] = [.smartAlbumUserLibrary, .smartAlbumFavorites, .albumRegular]
@@ -27,10 +22,11 @@ public class TMImageDataManager: NSObject, PHPhotoLibraryChangeObserver {
             }
         }
         PHPhotoLibrary.shared().register(self)
+        self.changeInstance = changeInstance
     }
     
     public func photoLibraryDidChange(_ changeInstance: PHChange) {
-        
+        self.changeInstance?(changeInstance)
     }
     
     private func collectionSubtype(subtype: PHAssetCollectionSubtype) -> PHAssetCollectionType {

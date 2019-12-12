@@ -3,24 +3,27 @@ import Photos
 
 public class TMPhotoViewController: UIViewController {
     
-    var defaultStyleConfig: Config = Config()
+    
     var albums = [Album]()
     var currentAlbum: Album?
     var payloadData = PayloadData()
     weak var delegate: TMPhotoPickerDelegate?
+    let defaultStyleConfig: TMConfig
     private lazy var collectionView: UICollectionView = createCollectionView()
     private lazy var tableView: UITableView = createTableView()
-    private lazy var titleView: NavTitleView = NavTitleView()
+    private lazy var statusView: StatusView = createStatusView()
+    private lazy var titleView: NavTitleView = createNavTitleView()
     private let cellSize = (UIScreen.main.bounds.width - (3 - 1) * 2) / 3
     private let dataManager = TMImageDataManager()
-    private let imageManager = PHCachingImageManager()
+    private var imageManager: PHCachingImageManager?
     private var expandedTopConstraint: NSLayoutConstraint?
     private var collapsedTopConstraint: NSLayoutConstraint?
     private var albumListExpanding: Bool = false
     private var animating: Bool = false
     private var previousPreheatRect = CGRect.zero
     
-    public init(delegate: TMPhotoPickerDelegate) {
+    public init(delegate: TMPhotoPickerDelegate, config: TMConfig) {
+        self.defaultStyleConfig = config
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
     }
@@ -55,6 +58,9 @@ public class TMPhotoViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(statusView)
+        statusView.translatesAutoresizingMaskIntoConstraints = false
+        view.bringSubviewToFront(statusView)
         
         if #available(iOS 11.0, *) {
             expandedTopConstraint = view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 0)
@@ -75,29 +81,34 @@ public class TMPhotoViewController: UIViewController {
             view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 0),
             view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: 0),
             view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0),
+            view.centerYAnchor.constraint(equalTo: statusView.centerYAnchor, constant: 0),
+            view.leadingAnchor.constraint(equalTo: statusView.leadingAnchor, constant: 0),
+            view.trailingAnchor.constraint(equalTo: statusView.trailingAnchor, constant: 0),
         ])
     }
     
     private func setNavigationitem() {
         let cameraItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(cameraPress))
-        cameraItem.tintColor = Config.Style.BarItem.getBarItemColor()
+        cameraItem.tintColor = defaultStyleConfig.getNavigationBarItemColor()
         navigationItem.rightBarButtonItem = cameraItem
         
         let closeItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(closePress))
-        closeItem.tintColor = Config.Style.BarItem.getBarItemColor()
+        closeItem.tintColor = defaultStyleConfig.getNavigationBarItemColor()
         navigationItem.leftBarButtonItem = closeItem
         titleView.delegate = self
         navigationItem.titleView = titleView
+        navigationController?.navigationBar.barStyle = defaultStyleConfig.darkMode ? .blackTranslucent : .default
+        navigationController?.navigationBar.barTintColor = defaultStyleConfig.getNavigationBarTintColor()
     }
     
     private func changeRightItem(isDone: Bool) {
         if isDone {
             let doneItem = UIBarButtonItem(title: "完成", style: .plain, target: self, action: #selector(donePress))
-            doneItem.tintColor = Config.Style.BarItem.getBarItemColor()
+            doneItem.tintColor = defaultStyleConfig.getNavigationBarItemColor()
             navigationItem.rightBarButtonItem = doneItem
         } else {
             let cameraItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(cameraPress))
-            cameraItem.tintColor = Config.Style.BarItem.getBarItemColor()
+            cameraItem.tintColor = defaultStyleConfig.getNavigationBarItemColor()
             navigationItem.rightBarButtonItem = cameraItem
         }
     }
@@ -107,7 +118,7 @@ public class TMPhotoViewController: UIViewController {
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 2
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = .white
+        view.backgroundColor = defaultStyleConfig.getBackgroundColor()
         view.delaysContentTouches = false
         view.delegate = self
         view.dataSource = self
@@ -119,19 +130,69 @@ public class TMPhotoViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = defaultStyleConfig.getBackgroundColor()
         tableView.separatorStyle = .none
         return tableView
     }
     
+    private func createStatusView() -> StatusView {
+        let statusView = StatusView(config: defaultStyleConfig)
+        statusView.actionButton.addTarget(self, action: #selector(openSetting), for: .touchUpInside)
+        statusView.isHidden = true
+        return statusView
+    }
+    
+    private func createNavTitleView() -> NavTitleView {
+        let titleView = NavTitleView(config: defaultStyleConfig)
+        return titleView
+    }
+    
     private func loadAlbum() {
-        albums = [Album]()
-        dataManager.fetch { [weak self] (album) in
-            self?.albums.append(album)
-            if self?.albums.isEmpty == false && album.collection.assetCollectionSubtype == .smartAlbumUserLibrary && self?.currentAlbum == nil {
-                DispatchQueue.main.async { [weak self] in
-                    self?.currentAlbum = album
-                    self?.titleView.setTitle(self?.currentAlbum?.collection.localizedTitle ?? "")
-                    self?.collectionView.reloadData()
+        TMCameraHelper.checkPhotoAuth { [weak self] (authorize) in
+            if authorize {
+                self?.imageManager = PHCachingImageManager()
+                self?.albums = [Album]()
+                self?.dataManager.fetch({ [weak self] (album) in
+                    self?.albums.append(album)
+                    if self?.albums.isEmpty == false && album.collection.assetCollectionSubtype == .smartAlbumUserLibrary && self?.currentAlbum == nil {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.currentAlbum = album
+                            self?.titleView.setTitle(self?.currentAlbum?.collection.localizedTitle ?? "")
+                            self?.collectionView.reloadData()
+                        }
+                    }
+                }) { [weak self] (changeInstance) in
+                    if let albums = self?.albums {
+                        for album in albums {
+                            if let fetchResult = album.fetchResult, let changeDetail = changeInstance.changeDetails(for: fetchResult) {
+                                if changeDetail.insertedIndexes != nil {
+                                    for insertObject in changeDetail.insertedObjects {
+                                        album.items.insert(Image(asset: insertObject), at: 0)
+                                    }
+                                }
+                                
+                                if changeDetail.removedIndexes != nil {
+                                    for removeObject in changeDetail.removedObjects {
+                                        let image = Image(asset: removeObject)
+                                        album.remove(image)
+                                        self?.payloadData.remove(image)
+                                    }
+                                }
+                                
+                                album.fetchResult = changeDetail.fetchResultAfterChanges
+                                
+                                if let currnetAlubm = self?.currentAlbum, currnetAlubm.collection.localIdentifier == album.collection.localIdentifier {
+                                    DispatchQueue.main.async {
+                                        self?.collectionView.reloadData()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.statusView.isHidden = false
                 }
             }
         }
@@ -144,6 +205,21 @@ public class TMPhotoViewController: UIViewController {
             self?.collectionView.reloadData()
             self?.toggleAlbumList()
         }
+    }
+    
+    @objc private func openSetting() {
+        let alertView = UIAlertController(title: "此功能需要相片存取權", message: "在設定中允許取用照片", preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "開啟設定", style: .default, handler: { (_) in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }))
+        alertView.addAction(UIAlertAction(title: "稍後再說", style: .cancel, handler: nil))
+        present(alertView, animated: true, completion: nil)
     }
     
     @objc private func cameraPress() {
@@ -251,10 +327,11 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCell.self), for: indexPath) as! ImageCell
+        cell.config = defaultStyleConfig
         let size = CGSize(width: cellSize * UIScreen.main.scale, height: cellSize * UIScreen.main.scale)
         if let item = currentAlbum?.items[indexPath.item] {
             cell.representedAssetIdentifier = item.asset.localIdentifier
-            imageManager.requestImage(for: item.asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+            imageManager?.requestImage(for: item.asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
                 if cell.representedAssetIdentifier == item.asset.localIdentifier {
                     cell.imageView.image = image
                 }
@@ -273,7 +350,7 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
             if payloadData.images.contains(item) {
                 payloadData.remove(item)
             } else {
-                if Config.Setting.imageLimit > 0 && Config.Setting.imageLimit > payloadData.images.count {
+                if defaultStyleConfig.selectImageLimit > 0 && defaultStyleConfig.selectImageLimit > payloadData.images.count {
                     payloadData.add(item)
                 }
             }
@@ -309,8 +386,12 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         // Update the assets the PHCachingImageManager is caching.
         let thumbnailSize = CGSize(width: cellSize * UIScreen.main.scale, height: cellSize * UIScreen.main.scale)
-        imageManager.startCachingImages(for: addedAssets, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
-        imageManager.stopCachingImages(for: removedAssets, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
+        TMCameraHelper.checkPhotoAuth { [weak self] (authorize) in
+            if authorize {
+                self?.imageManager?.startCachingImages(for: addedAssets, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
+                self?.imageManager?.stopCachingImages(for: removedAssets, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil)
+            }
+        }
         
         // Store the preheat rect to compare against in the future.
         previousPreheatRect = preheatRect
@@ -350,6 +431,7 @@ extension TMPhotoViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AlbumCell.self), for: indexPath) as! AlbumCell
+        cell.config = defaultStyleConfig
         let album = albums[indexPath.row]
         if let item = album.items.first {
             cell.albumImageView.tm_loadImage(item.asset)
