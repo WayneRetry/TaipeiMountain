@@ -35,11 +35,13 @@ class ViewController: UIViewController {
     @IBAction func albumPress() {
         let config = TMConfig()
         config.mainColor = .red
-        let vc = TMPhotoViewController(delegate: self, config: config)
-        vc.preSelectImage(assets: imageData.compactMap{$0.asset})
-        let nv = UINavigationController(rootViewController: vc)
-        nv.modalPresentationStyle = .fullScreen
-        present(nv, animated: true, completion: nil)
+        let vc = TMPhotoViewController.create(delegate: self, preSelectAsset: imageData.compactMap{$0.asset}, config: config)
+        present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func singlePress() {
+        let vc = TMPhotoViewController.createSingle(delegate: self)
+        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func cameraPress() {

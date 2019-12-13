@@ -3,6 +3,21 @@ import Photos
 
 public class TMPhotoViewController: UIViewController {
     
+    public class func create(delegate: TMPhotoPickerDelegate, preSelectAsset: [PHAsset] = [], config: TMConfig? = nil) -> UIViewController {
+        let vc = TMPhotoViewController(delegate: delegate, config: config ?? TMConfig())
+        vc.preSelectImage(assets: preSelectAsset)
+        let nv = UINavigationController(rootViewController: vc)
+        nv.modalPresentationStyle = .fullScreen
+        return nv
+    }
+    
+    public class func createSingle(delegate: TMPhotoPickerDelegate, config: TMConfig? = nil) -> UIViewController {
+        let vc = TMPhotoViewController(delegate: delegate, config: config ?? TMConfig())
+        vc.singleSelect = true
+        let nv = UINavigationController(rootViewController: vc)
+        nv.modalPresentationStyle = .fullScreen
+        return nv
+    }
     
     var albums = [Album]()
     var currentAlbum: Album?
@@ -13,6 +28,7 @@ public class TMPhotoViewController: UIViewController {
     private lazy var tableView: UITableView = createTableView()
     private lazy var statusView: StatusView = createStatusView()
     private lazy var titleView: NavTitleView = createNavTitleView()
+    private var singleSelect: Bool = false
     private let cellSize = (UIScreen.main.bounds.width - (3 - 1) * 2) / 3
     private let dataManager = TMImageDataManager()
     private var imageManager: PHCachingImageManager?
@@ -264,6 +280,23 @@ public class TMPhotoViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    private func sendSinglePhoto(asset: PHAsset) {
+        let imageManager = PHImageManager()
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .opportunistic
+        options.resizeMode = .exact
+        options.isNetworkAccessAllowed = true
+        options.progressHandler = { [weak self] (progress, error, stop, info) in
+            self?.delegate?.photoDownloadProgress(picker: self, progress: progress, error: error)
+        }
+        imageManager.requestImageData(for: asset, options: options) { [weak self] (data, _, _, _) in
+            if let data = data, let image = UIImage(data: data) {
+                self?.delegate?.photoPickerViewController(picker: self, images: [(image, asset)])
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
     private func toggleAlbumList() {
         guard !animating else { return }
         animating = true
@@ -337,7 +370,12 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
                 }
             }
         }
-        reloadSelectCell(cell, indexPath: indexPath)
+        if singleSelect {
+            cell.selectedView.labelView.isHidden = true
+            cell.selectedView.countLabel.isHidden = true
+        } else {
+            reloadSelectCell(cell, indexPath: indexPath)
+        }
         return cell
     }
     
@@ -355,8 +393,16 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
                 }
             }
         }
-        reloadSelectCell()
-        changeRightItem(isDone: payloadData.images.isEmpty == false)
+        if singleSelect {
+            if let item = currentAlbum?.items[indexPath.item] {
+                sendSinglePhoto(asset: item.asset)
+            }
+        } else {
+            reloadSelectCell()
+            changeRightItem(isDone: payloadData.images.isEmpty == false)
+        }
+        
+        
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {

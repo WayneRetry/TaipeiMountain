@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,7 +27,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="09h-e6-cVg">
-                                <rect key="frame" x="76" y="50" width="54" height="30"/>
+                                <rect key="frame" x="68" y="50" width="54" height="30"/>
                                 <state key="normal" title="Camera"/>
                                 <connections>
                                     <action selector="cameraPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="IFV-LH-dwW"/>
@@ -68,6 +68,13 @@
                                     <action selector="clearPress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="q1G-50-IuF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UR-2a-tm8">
+                                <rect key="frame" x="130" y="50" width="43" height="30"/>
+                                <state key="normal" title="Single"/>
+                                <connections>
+                                    <action selector="singlePress" destination="vXZ-lx-hvc" eventType="touchUpInside" id="eUJ-vW-iTa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -75,7 +82,9 @@
                             <constraint firstItem="5fS-vv-dPk" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="C4K-CU-hzS"/>
                             <constraint firstItem="CNv-X6-lR2" firstAttribute="top" secondItem="5fS-vv-dPk" secondAttribute="bottom" constant="16" id="Hrg-h3-Nu1"/>
                             <constraint firstItem="5fS-vv-dPk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="ITT-vU-KLe"/>
-                            <constraint firstItem="09h-e6-cVg" firstAttribute="leading" secondItem="5fS-vv-dPk" secondAttribute="trailing" constant="16" id="Ukb-pr-6Ey"/>
+                            <constraint firstItem="2UR-2a-tm8" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="UHC-qb-EbL"/>
+                            <constraint firstItem="09h-e6-cVg" firstAttribute="leading" secondItem="5fS-vv-dPk" secondAttribute="trailing" constant="8" id="Ukb-pr-6Ey"/>
+                            <constraint firstItem="2UR-2a-tm8" firstAttribute="leading" secondItem="09h-e6-cVg" secondAttribute="trailing" constant="8" id="Vts-Ha-oa7"/>
                             <constraint firstItem="YXa-fi-seK" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="WEW-hk-TEh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CNv-X6-lR2" secondAttribute="trailing" id="Z5O-Yb-F5v"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="CNv-X6-lR2" secondAttribute="bottom" id="dJ0-kh-QuL"/>
