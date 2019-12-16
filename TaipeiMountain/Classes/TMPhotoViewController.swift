@@ -115,6 +115,8 @@ public class TMPhotoViewController: UIViewController {
         navigationItem.titleView = titleView
         navigationController?.navigationBar.barStyle = defaultStyleConfig.darkMode ? .blackTranslucent : .default
         navigationController?.navigationBar.barTintColor = defaultStyleConfig.getNavigationBarTintColor()
+        
+        changeRightItem(isDone: payloadData.images.isEmpty == false)
     }
     
     private func changeRightItem(isDone: Bool) {
@@ -401,8 +403,6 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
             reloadSelectCell()
             changeRightItem(isDone: payloadData.images.isEmpty == false)
         }
-        
-        
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
