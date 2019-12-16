@@ -34,6 +34,7 @@ class StatusView: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.textColor = config.getNavigationTitleColor()
         label.font = UIFont.systemFont(ofSize: 19, weight: .light)
         label.text = "在此查看並分享你的相片"
         return label

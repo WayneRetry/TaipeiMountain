@@ -40,7 +40,9 @@ public extension UIViewController {
                             }
                         }))
                         alertView.addAction(UIAlertAction(title: "稍後再說", style: .cancel, handler: nil))
-                        self?.present(alertView, animated: true, completion: nil)
+                        DispatchQueue.main.async {
+                            self?.present(alertView, animated: true, completion: nil)
+                        }
                         delegate?.didReceiveAccessDenied()
                     }
                 }
@@ -56,7 +58,9 @@ public extension UIViewController {
                     }
                 }))
                 alertView.addAction(UIAlertAction(title: "稍後再說", style: .cancel, handler: nil))
-                self?.present(alertView, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self?.present(alertView, animated: true, completion: nil)
+                }
                 delegate?.didReceiveAccessDenied()
             }
         }
