@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TaipeiMountain'
-  s.version          = '1.1.3'
+  s.version          = '1.1.4'
   s.summary          = 'TaipeiMountain is album photo picker written in Swift.'
 
 # This description is used to generate tags and improve search results.
@@ -21,15 +21,15 @@ Pod::Spec.new do |s|
 TaipeiMountain is album photo picker written in Swift.
                        DESC
 
-  s.homepage         = 'https://github.com/WayneLin1215/TaipeiMountain'
+  s.homepage         = 'https://github.com/AntisoWrite/TaipeiMountain'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Wayne' => 'waynelin1215@gmail.com' }
-  s.source           = { :git => 'https://github.com/WayneLin1215/TaipeiMountain.git', :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/antiso_help'
+  s.author           = { 'Antiso' => 'waynelin1215@gmail.com' }
+  s.source           = { :git => 'https://github.com/AntisoWrite/TaipeiMountain.git', :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/Antiso_app'
 
   s.ios.deployment_target = '10.0'
-  s.swift_version = '4.2'
+  s.swift_version = '5'
   s.source_files = 'TaipeiMountain/Classes/**/*'
   
   # s.resource_bundles = {
