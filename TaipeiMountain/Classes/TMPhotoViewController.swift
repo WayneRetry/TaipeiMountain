@@ -366,7 +366,7 @@ extension TMPhotoViewController: UICollectionViewDelegate, UICollectionViewDataS
         let size = CGSize(width: cellSize * UIScreen.main.scale, height: cellSize * UIScreen.main.scale)
         if let item = currentAlbum?.items[indexPath.item] {
             cell.representedAssetIdentifier = item.asset.localIdentifier
-            imageManager?.requestImage(for: item.asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
+            imageManager?.requestImage(for: item.asset, targetSize: size, contentMode: .aspectFit, options: nil) { (image, info) in
                 if info?[PHImageErrorKey] == nil {
                     if cell.representedAssetIdentifier == item.asset.localIdentifier {
                         cell.imageView.image = image
